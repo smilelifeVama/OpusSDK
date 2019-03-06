@@ -63,17 +63,17 @@ public class MainActivity extends Activity {
 			File fileAfter = new File("/mnt/sdcard/txz/opused.data");
 			fos = new FileOutputStream(fileAfter, true);
 			fis = new FileInputStream(file);
-			byte[] buf = new byte[640];
-			byte[] bufDecode = new byte[640];
-			byte[] bufOut = new byte[640];
+			byte[] buf = new byte[1280];
+			byte[] bufDecode = new byte[1280];
+			byte[] bufOut = new byte[1280];
 			int len = 0;
 			while((len = fis.read(buf)) > 0){
-				int l = mEncoder.encode(buf, len, bufOut);
+				int l = mEncoder.encode(buf, len, bufOut, 320);
 				Log.i("test", "opus encode["+len+"to"+l+"]");
-				fos.write(bufOut, 0, l);
-//				int ll = mDecoder.decode(bufOut, l, bufDecode);
-//				Log.i("test", "opus decode["+l+"to"+ll+"]");
-//				fos.write(bufDecode, 0, ll);
+//				fos.write(bufOut, 0, l);
+				int ll = mDecoder.decode(bufOut, l, bufDecode, 320);
+				Log.i("test", "opus decode["+l+"to"+ll+"]");
+				fos.write(bufDecode, 0, ll);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -100,14 +100,17 @@ public class MainActivity extends Activity {
 		FileInputStream fis = null;
 		try{
 			File file = new File("/mnt/sdcard/txz/opus1.pcm");
-			File fileOpused = new File("/mnt/sdcard/txz/opus.encode");
+			File fileOpused = new File("/mnt/sdcard/txz/opused.data");
 			fos = new FileOutputStream(file, true);
 			fis = new FileInputStream(fileOpused);
 			byte[] buf = new byte[640];
 			byte[] bufOut = new byte[640];
 			int len = 0; 
-			while((len = fis.read(buf)) > 0){
-				int l = mDecoder.decode(buf, len, bufOut);
+			while((len = fis.read(buf, 0, buf.length)) > 0){
+				Log.i("opus", String.format("1decode buf[0][%02X] buf[1][%02X]", buf[0], buf[1]));
+				int l = mDecoder.decode(buf, len, bufOut, 320);
+				Log.i("opus", String.format("2decode buf[0][%02X] buf[1][%02X]", buf[0], buf[1]));
+//				Log.i("opus", "decode buf[0] = " +  String.format("%02X", buf[0]) + ", buf[1] = ");
 				fos.write(bufOut, 0, l);
 				Log.i("test", "opus decode["+len+"to"+l+"]");
 			}

@@ -26,7 +26,8 @@ F:/workspace/java/OpusSDK//obj/local/armeabi-v7a/objs/opus_sdk/opus_sdk.o: \
  D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/linux/types.h \
  D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/machine/kernel.h \
  D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/sys/sysmacros.h \
- D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/memory.h
+ D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/memory.h \
+ D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/sources/cxx-stl/gnu-libstdc++/4.8/include/cstring
 
 F:/workspace/java/OpusSDK//jni/opus_sdk.h:
 
@@ -81,3 +82,5 @@ D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-a
 D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/sys/sysmacros.h:
 
 D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/platforms/android-3/arch-arm/usr/include/memory.h:
+
+D:/work/android-ndk32-r10-windows-x86/android-ndk-r10/sources/cxx-stl/gnu-libstdc++/4.8/include/cstring:

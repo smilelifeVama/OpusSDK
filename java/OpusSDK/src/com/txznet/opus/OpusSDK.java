@@ -7,9 +7,9 @@ public class OpusSDK {
 
     static native long create(int type, int sampleRate, int channels);
 
-    static native int encode(long session, byte[] data, int size, byte[] output);
+    static native int encode(long session, byte[] data, int size, byte[] output, int frameSize);
 
-    static native int decode(long session, byte[] data, int size, byte[] output);
+    static native int decode(long session, byte[] data, int size, byte[] output, int frameSize);
 
     static native void destroy(int type, long session);
 
