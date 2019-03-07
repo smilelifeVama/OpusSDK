@@ -40,16 +40,20 @@ public class OpusEncoder {
 	 * @param frameSize
 	 * @return
 	 */
-//	public int encode2File(byte[] data, int size, byte[] output, int frameSize){
-//		if(session == 0){
-//			return 0;
-//		}
-//		int ret = OpusSDK.encode(session, data, size, output, frameSize);
-//		
-//		
-//		
-//		
-//	}
+	public int encode2File(byte[] data, int frameSize, byte[] output, int maxLen){
+		if(session == 0){
+			return 0;
+		}
+		int ret = OpusSDK.encode(session, data, frameSize, output, maxLen - 2);
+		if(ret < 0){
+			return ret;
+		}
+		
+		
+		
+		return ret + 2;
+		
+	}
 	
 	
 	public void destroy(){

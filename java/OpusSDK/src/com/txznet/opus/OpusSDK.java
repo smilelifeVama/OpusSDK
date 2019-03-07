@@ -12,5 +12,5 @@ public class OpusSDK {
     static native int decode(long session, byte[] data, int size, byte[] output, int frameSize);
 
     static native void destroy(int type, long session);
-
+    
 }
