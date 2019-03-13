@@ -1,10 +1,14 @@
 package com.txznet.activity;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.txznet.opus.OpusDecoder;
 import com.txznet.opus.OpusEncoder;
@@ -12,6 +16,7 @@ import com.txznet.opus.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +55,8 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				decode();
+//				decode();
+				decodeFromOpusFrame();
 			}
 		});
 	}
@@ -63,9 +69,9 @@ public class MainActivity extends Activity {
 			File fileAfter = new File("/mnt/sdcard/txz/opused.data");
 			fos = new FileOutputStream(fileAfter, true);
 			fis = new FileInputStream(file);
-			byte[] buf = new byte[1280];
-			byte[] bufDecode = new byte[1280];
-			byte[] bufOut = new byte[1280];
+			byte[] buf = new byte[640];
+			byte[] bufDecode = new byte[640];
+			byte[] bufOut = new byte[640];
 			int len = 0;
 			while((len = fis.read(buf)) > 0){
 				int l = mEncoder.encode(buf, len, bufOut, 320);
@@ -94,6 +100,49 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
+	
+	private void decodeFromOpusFrame() {
+		try {
+			FileReader fr = new FileReader(new File("/mnt/sdcard/txz/opusFrame.txt"));
+			BufferedReader br = new BufferedReader(fr);
+			FileOutputStream fos = new FileOutputStream(new File("/mnt/sdcard/txz/opusFrame.pcm"), true);
+			String line = null;
+			while((line = br.readLine()) != null){
+				Log.i("tag", "line = " + line);
+				int index = line.indexOf("voiceFrame:");
+				String strData = line.substring(index + 11).trim();
+				Log.i("tag", "strData = " + strData);
+				for(int i = 0; i<3; i++){
+					byte[] bytes = hexStringToByte(strData.substring(i * 80, 80 * (i+1)));
+					Log.i("tag", "bytes length = " + bytes.length);
+					byte[] bufOut = new byte[640];
+					int l = mDecoder.decode(bytes, bytes.length, bufOut, 320);
+					Log.i("tag", "bufOut length = " + l);
+					fos.write(bufOut, 0, l);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+		}
+	}
+	
+	 public static byte[] hexStringToByte(String hex) {
+		   int len = (hex.length() / 2);
+		   byte[] result = new byte[len];
+		   char[] achar = hex.toCharArray();
+		   for (int i = 0; i < len; i++) {
+		    int pos = i * 2;
+		    result[i] = (byte) (toByte(achar[pos]) << 4 | toByte(achar[pos + 1]));
+		   }
+		   return result;
+		  }
+	 
+	 private static int toByte(char c) {
+		    byte b = (byte) "0123456789ABCDEF".indexOf(c);
+		    return b;
+		 }
 	
 	private void decode() {
 		FileOutputStream fos = null;

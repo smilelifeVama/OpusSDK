@@ -12,7 +12,7 @@ extern "C" {
  * Method:    create
  */
 JNIEXPORT jlong JNICALL Java_com_txznet_opus_OpusSDK_create
-  (JNIEnv * env, jclass clazz, jint type, jint sampleRate, jint channels);
+  (JNIEnv * env, jclass clazz, jint type, jint sampleRate, jint channels, jint VBR);
 
 /*
  * Class:     com_txznet_opus_OpusSDK

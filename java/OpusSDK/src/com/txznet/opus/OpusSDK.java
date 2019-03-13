@@ -5,7 +5,7 @@ public class OpusSDK {
         System.loadLibrary("opus_sdk");
     }
 
-    static native long create(int type, int sampleRate, int channels);
+    static native long create(int type, int sampleRate, int channels, int VBR);
 
     static native int encode(long session, byte[] data, int size, byte[] output, int frameSize);
 
